@@ -23,44 +23,14 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/im_carf"
+            android:id="@+id/im_car1"
             android:layout_width="25dp"
             android:layout_height="50dp"
             android:layout_x="545px"
             android:layout_y="300px"
             android:src="@drawable/car_red" />
 
-        <ImageView
-            android:id="@+id/im_carl"
-            android:layout_width="25dp"
-            android:layout_height="50dp"
-            android:layout_x="505px"
-            android:layout_y="250px"
-            android:src="@drawable/car_red" />
 
-        <ImageView
-            android:id="@+id/im_carll1"
-            android:layout_width="25dp"
-            android:layout_height="50dp"
-            android:layout_x="465px"
-            android:layout_y="250px"
-            android:src="@drawable/car_red" />
-
-        <ImageView
-            android:id="@+id/im_carll2"
-            android:layout_width="25dp"
-            android:layout_height="50dp"
-            android:layout_x="435px"
-            android:layout_y="250px"
-            android:src="@drawable/car_red" />
-
-        <ImageView
-            android:id="@+id/im_carr"
-            android:layout_width="25dp"
-            android:layout_height="50dp"
-            android:layout_x="575px"
-            android:layout_y="250px"
-            android:src="@drawable/car_red" />
     </AbsoluteLayout>
 
 </android.support.constraint.ConstraintLayout>

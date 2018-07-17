@@ -14,38 +14,24 @@
         <item
             android:id="@+id/nav_connect"
             android:icon="@mipmap/ic_bluetooth_connect"
-            android:title="显示隐藏" />
+            android:title="设备连接" />
         <item
             android:id="@+id/nav_settings"
             android:icon="@mipmap/ic_settings"
-            android:title="前方" />
+            android:title="设置" />
         <item
             android:id="@+id/nav_update"
             android:icon="@mipmap/ic_update"
-            android:title="左前" />
+            android:title="检查更新" />
         <item
             android:id="@+id/nav_question"
             android:icon="@mipmap/ic_question"
-            android:title="对向1" />
+            android:title="常见问题" />
         <item
             android:id="@+id/nav_about"
             android:icon="@mipmap/ic_about"
-            android:title="对向2" />
-        <item
-            android:id="@+id/a11"
-            android:title="右边"/>
-        <item
-            android:id="@+id/a12"
-            android:title="2车道 左"/>
-        <item
-            android:id="@+id/a13"
-            android:title="2车道 右"/>
-        <item
-            android:id="@+id/a14"
-            android:title="3车道 中"/>
-        <item
-            android:id="@+id/a15"
-            android:title="3车道 左"/>
+            android:title="关于" />
+
     </group>
 
 
