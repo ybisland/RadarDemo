@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--这个布局上有FAB、雷达背景图，并且车辆动画将显示在这里-->
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/radar_background4"
+    android:theme="@style/AppTheme.NoActionBar">
+
+    <!--分辨率 1105 400    原点 （ 545，400）-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_nav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="6dp"
+        android:src="@mipmap/ic_menu"
+        app:backgroundTint="#fff" />
+
+    <AbsoluteLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/im_carf"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            android:layout_x="545px"
+            android:layout_y="300px"
+            android:src="@drawable/car_red" />
+
+        <ImageView
+            android:id="@+id/im_carl"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            android:layout_x="505px"
+            android:layout_y="250px"
+            android:src="@drawable/car_red" />
+
+        <ImageView
+            android:id="@+id/im_carll1"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            android:layout_x="465px"
+            android:layout_y="250px"
+            android:src="@drawable/car_red" />
+
+        <ImageView
+            android:id="@+id/im_carll2"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            android:layout_x="435px"
+            android:layout_y="250px"
+            android:src="@drawable/car_red" />
+
+        <ImageView
+            android:id="@+id/im_carr"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            android:layout_x="575px"
+            android:layout_y="250px"
+            android:src="@drawable/car_red" />
+    </AbsoluteLayout>
+
+</android.support.constraint.ConstraintLayout>
