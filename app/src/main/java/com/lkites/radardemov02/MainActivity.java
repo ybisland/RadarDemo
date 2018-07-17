@@ -35,7 +35,7 @@ import java.util.TimerTask;
 └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
 
    Modification date:18-5-1
-   Describe:
+   Describe:完成雷达车辆显示的功能，还差WiFi没有实现
 
 */
 public class MainActivity extends AppCompatActivity
