@@ -27,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(i);
                 finish();//防止在主界面按返回按键回到该活动
             }
-        }, 100);
+        }, 1000);
 
     }
 }

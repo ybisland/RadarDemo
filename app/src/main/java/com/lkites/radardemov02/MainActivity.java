@@ -1,10 +1,9 @@
 package com.lkites.radardemov02;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.DrawableRes;
+import android.os.Message;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -42,34 +41,65 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    ConstraintLayout constraintLayout;
+    private ConstraintLayout constraintLayout;
     Timer timer;
     TimerTask timerTask;
 
-    ImageView im_car1;
-
-    float x, y;
-
+    private ImageView im_car1;
+    private String str_receive, str_distance, str_angle;
 
 
-    //runOnUiThread的参数
-    Runnable r = new Runnable() {
-        @Override
-        public void run() {//在这里只写更新UI的代码
-            //如果x或y没有值，就不改变x或y
-
-
-        }
-    };
+//    //runOnUiThread的参数
+//    Runnable r = new Runnable() {
+//        @Override
+//        public void run() {//在这里只写更新UI的代码
+//            //如果x或y没有值，就不改变x或y
+//
+//
+//        }
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        InitView();
 
+
+
+        //开启服务器
+        MobileServer mobileServer = new MobileServer();
+        mobileServer.setHandler(handler);
+        new Thread(mobileServer).start();
+        System.out.print("服务器开启");
+
+
+
+
+
+//        //Timer定期更新UI
+//        timer = new Timer();
+//        //创建TimerTask对象
+//        timerTask = new TimerTask() {
+//            @Override
+//            public void run() {//设置xy的移动方式
+//
+//
+//                runOnUiThread(r);//用主线程去修改UI，r在上面具体写出了
+//            }
+//        };
+//        timer.schedule(timerTask, 1000, 50);
+
+
+    }//onCreate结束
+
+
+    private void InitView() {
 
         constraintLayout = findViewById(R.id.constraintlayout);
+
+        im_car1 = findViewById(R.id.im_car1);
 
         //设置侧滑导航的点击事件
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -85,24 +115,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-
-
-        //Timer定期更新UI
-        timer = new Timer();
-        //创建TimerTask对象
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {//设置xy的移动方式
-
-
-                runOnUiThread(r);//用主线程去修改UI，r在上面具体写出了
-            }
-        };
-        timer.schedule(timerTask, 1000, 50);
-
-
-    }//onCreate结束
+    }
 
 
     //本类实现onNavigationItemSelectedListener的接口
@@ -123,13 +136,13 @@ public class MainActivity extends AppCompatActivity
             }, 1000);
 
         } else if (id == R.id.nav_question) {
-
+//todo
 
         } else if (id == R.id.nav_update) {
-            Toast.makeText(MainActivity.this, "当前版本为0.3", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "当前为最新版本", Toast.LENGTH_SHORT).show();
         } else {
             if (id == R.id.nav_about) {
-
+//todo
             Intent i = new Intent(MainActivity.this,AboutActivity.class);
             startActivity(i);
 
@@ -160,4 +173,35 @@ public class MainActivity extends AppCompatActivity
         timer.cancel();
         timerTask.cancel();
     }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {  //接收消息
+            switch (msg.what) {
+                case 1:
+                    str_receive = (String) msg.obj;
+
+                    //将接收的消息拆分成距离和角度的字符串
+                    String[] str = str_receive.split(",");
+                    str_distance = str[0];
+                    str_angle = str[1];
+
+                    //将距离和角度的字符串转换成int类型
+                    int int_distance = Integer.valueOf(str_distance);
+                    int int_angle = Integer.valueOf(str_angle);
+                    Point p = new Point(int_distance,int_angle);
+
+
+                    im_car1.setX(p.x);
+                    im_car1.setY(p.y);
+                    System.out.println(p.x);
+                    System.out.println(p.y);
+
+
+            }
+        }//这里会存在内存泄露的风险，所以代码块变黄了
+    };
+
+
+
 }
