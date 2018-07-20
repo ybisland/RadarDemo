@@ -17,7 +17,6 @@ public class Point {
 
     public float x, y;
 
-
     Point(int d, int a) {
         if (d < 600 && d >= 0 && a > -40 && a < 40) { //确保数据正常，0=<d<600, -40<a<40
             x = (float) (ORIGIN_X + d * cos(a));

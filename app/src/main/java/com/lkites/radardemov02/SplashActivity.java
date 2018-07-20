@@ -8,6 +8,7 @@ import android.view.Window;
 
 public class SplashActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,7 +18,6 @@ public class SplashActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-
 
         //设置进入主界面的延时
         new Handler().postDelayed(new Runnable() {
@@ -29,5 +29,11 @@ public class SplashActivity extends AppCompatActivity {
             }
         }, 1000);
 
+
+    }
+
+    //禁止返回按键
+    @Override
+    public void onBackPressed() {
     }
 }

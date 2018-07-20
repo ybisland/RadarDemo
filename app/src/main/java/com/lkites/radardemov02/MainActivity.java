@@ -15,9 +15,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 /*
 ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
 │Esc│   │F1 │F2 │F3 │F4 │ │F5 │F6 │F7 │F8 │ │F9 │F10│F11│F12│ │P/S│S L│P/B│  ┌┐    ┌┐    ┌┐
@@ -37,27 +34,18 @@ import java.util.TimerTask;
    Modification date:18-5-1
    Describe:完成雷达车辆显示的功能，还差WiFi没有实现
 
+   先完成一个车辆的v1版本，之后再完成多个车辆的版本，那时将car_image改成new的形式来实现
+
 */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ConstraintLayout constraintLayout;
-    Timer timer;
-    TimerTask timerTask;
 
     private ImageView im_car1;
     private String str_receive, str_distance, str_angle;
 
 
-//    //runOnUiThread的参数
-//    Runnable r = new Runnable() {
-//        @Override
-//        public void run() {//在这里只写更新UI的代码
-//            //如果x或y没有值，就不改变x或y
-//
-//
-//        }
-//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,31 +53,12 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         InitView();
-
-
+//todo 检查WiFi是否开启以及是否连接到esp8266的WiFi
 
         //开启服务器
         MobileServer mobileServer = new MobileServer();
         mobileServer.setHandler(handler);
         new Thread(mobileServer).start();
-        System.out.print("服务器开启");
-
-
-
-
-
-//        //Timer定期更新UI
-//        timer = new Timer();
-//        //创建TimerTask对象
-//        timerTask = new TimerTask() {
-//            @Override
-//            public void run() {//设置xy的移动方式
-//
-//
-//                runOnUiThread(r);//用主线程去修改UI，r在上面具体写出了
-//            }
-//        };
-//        timer.schedule(timerTask, 1000, 50);
 
 
     }//onCreate结束
@@ -98,7 +67,6 @@ public class MainActivity extends AppCompatActivity
     private void InitView() {
 
         constraintLayout = findViewById(R.id.constraintlayout);
-
         im_car1 = findViewById(R.id.im_car1);
 
         //设置侧滑导航的点击事件
@@ -128,6 +96,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_main) {
             constraintLayout.setBackgroundResource(R.drawable.radar_background4);
         } else if (id == R.id.nav_connect) {
+//todo 检查WiFi是否开启以及是否连接到esp8266的WiFi
+//
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -136,13 +106,13 @@ public class MainActivity extends AppCompatActivity
             }, 1000);
 
         } else if (id == R.id.nav_question) {
-//todo
+//todo 常见问题 使用说明
 
         } else if (id == R.id.nav_update) {
             Toast.makeText(MainActivity.this, "当前为最新版本", Toast.LENGTH_SHORT).show();
         } else {
             if (id == R.id.nav_about) {
-//todo
+//todo 关于
             Intent i = new Intent(MainActivity.this,AboutActivity.class);
             startActivity(i);
 
@@ -154,7 +124,6 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
     @Override
     public void onBackPressed() {
@@ -170,8 +139,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        timer.cancel();
-        timerTask.cancel();
     }
 
     private Handler handler = new Handler() {
@@ -190,18 +157,14 @@ public class MainActivity extends AppCompatActivity
                     int int_distance = Integer.valueOf(str_distance);
                     int int_angle = Integer.valueOf(str_angle);
                     Point p = new Point(int_distance,int_angle);
-
-
+//todo 封装成一个函数
+//todo 屏幕适配
                     im_car1.setX(p.x);
                     im_car1.setY(p.y);
                     System.out.println(p.x);
                     System.out.println(p.y);
 
-
             }
         }//这里会存在内存泄露的风险，所以代码块变黄了
     };
-
-
-
 }

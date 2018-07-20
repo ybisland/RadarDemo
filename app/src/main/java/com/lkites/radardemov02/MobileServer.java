@@ -29,7 +29,7 @@ public class MobileServer implements Runnable {
 
     @Override
     public void run() {
-
+//todo 透传
         try {
             //5000是手机端开启的服务器的端口号，ESP8266进行TCP连接时使用的端口，而IP也是通过指令查询的联入设备的IP
             server = new ServerSocket(5000);
