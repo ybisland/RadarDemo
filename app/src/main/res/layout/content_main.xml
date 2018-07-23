@@ -26,11 +26,42 @@
             android:id="@+id/im_car1"
             android:layout_width="25dp"
             android:layout_height="50dp"
-            android:layout_x="545px"
-            android:layout_y="300px"
+            android:layout_x="545dp"
+            android:layout_y="400dp"
             android:src="@drawable/car_red"
-            android:visibility="invisible"/>
-
+            android:visibility="visible"/>
+        <ImageView
+            android:id="@+id/im_car2"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            android:layout_x="545dp"
+            android:layout_y="400dp"
+            android:src="@drawable/car_red"
+            android:visibility="visible"/>
+        <ImageView
+            android:id="@+id/im_car3"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            android:layout_x="545dp"
+            android:layout_y="400dp"
+            android:src="@drawable/car_red"
+            android:visibility="visible"/>
+        <ImageView
+            android:id="@+id/im_car4"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            android:layout_x="545dp"
+            android:layout_y="400dp"
+            android:src="@drawable/car_red"
+            android:visibility="visible"/>
+        <ImageView
+            android:id="@+id/im_car5"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            android:layout_x="545dp"
+            android:layout_y="400dp"
+            android:src="@drawable/car_red"
+            android:visibility="visible"/>
 
     </AbsoluteLayout>
 

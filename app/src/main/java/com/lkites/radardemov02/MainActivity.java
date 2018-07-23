@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -34,16 +35,19 @@ import java.util.List;
 ├─────┬──┴─┬─┴──┬┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬────┬────┤ ┌───┼───┼───┐ ├───┴───┼───┤ E││
 │ Ctrl│ Fn │Alt │         Space         │ Alt│ Fn │ Pn │Ctrl│ │ ← │ ↓ │ → │ │   0   │ . │←─┘│
 └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
+
+写代码的时候总是很佩服自己，我真TM是个人才，竟然能写出这样迷一般的代码
+
 */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ConstraintLayout constraintLayout;
-    private ImageView im_car1;
+    private ImageView im_car1, im_car2, im_car3, im_car4, im_car5;
     private WifiAdmin mWifiAdmin;
-    private String str_receive, str_distance, str_angle;
     private MyHandler myHandler;
-    private List<ImageView> list_car;
+    private ArrayList<ImageView> list_car;
+    private ArrayList<Point> list_point;
 
 
     @Override
@@ -68,6 +72,22 @@ public class MainActivity extends AppCompatActivity
 
         constraintLayout = findViewById(R.id.constraintlayout);
         im_car1 = findViewById(R.id.im_car1);
+        im_car2 = findViewById(R.id.im_car2);
+        im_car3 = findViewById(R.id.im_car3);
+        im_car4 = findViewById(R.id.im_car4);
+        im_car5 = findViewById(R.id.im_car5);
+        //im_car的存储数组
+        list_car = new ArrayList<>(5);
+        list_car.add(im_car1);
+        list_car.add(im_car2);
+        list_car.add(im_car3);
+        list_car.add(im_car4);
+        list_car.add(im_car5);
+        //im_car的坐标存储数组,初始化坐标都是原点
+        list_point = new ArrayList<>(5);
+        for (int i = 0; i < 5; i++) {
+            list_point.add(new Point((int) Point.ORIGIN_X, (int) Point.ORIGIN_Y));
+        }
 
         mWifiAdmin = new WifiAdmin(this);
 
@@ -103,7 +123,7 @@ public class MainActivity extends AppCompatActivity
 
             if ((mWifiAdmin.checkState() == 3) && (mWifiAdmin.getSSID().equals("\"ATK_ESP8266\""))) {
                 //如果已经连接了esp8266，就不再显示进度条和执行连接的操作
-                Toast.makeText(MainActivity.this, "雷达已经连接成功！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "雷达已经连接成功！", Toast.LENGTH_LONG).show();
             } else {
                 //环形进度条
                 showProgressDialog(2900);
@@ -201,28 +221,49 @@ public class MainActivity extends AppCompatActivity
         public void handleMessage(Message msg) {  //接收消息
             switch (msg.what) {
                 case 1:
+                    String str_receive;
+                    String str_distance, str_angle;
+                    int int_distance, int_angle;
+
                     str_receive = (String) msg.obj;
 
-                    //将接收的消息拆分成距离和角度的字符串
+                    //将接收的消息拆分成距离和角度的字符串,并以int类型放入list_point中
+                    //下标偶数为距离，奇数为角度
                     String[] str = str_receive.split(",");
-                    str_distance = str[0];
-                    str_angle = str[1];
+//                    Log.i("111", " " + str.length);
 
-                    //将距离和角度的字符串转换成int类型
-                    int int_distance = Integer.valueOf(str_distance);
-                    int int_angle = Integer.valueOf(str_angle);
-                    Point p = new Point(int_distance, int_angle);
-//todo 用list来放多个car
-//todo 屏幕适配
-                    
+                    for (int i = 0; i < str.length - 1; i += 2) {
+                        str_distance = str[i];
+                        str_angle = str[i+1];
+                        try {//字符串容易出异常
+                            int_distance = Integer.valueOf(str_distance);
+                            int_angle = Integer.valueOf(str_angle);
+                        } catch (Exception e) {
+                            int_distance = -1;
+                            int_angle = -1;
+                        }
 
-                    im_car1.setX(p.x);
-                    im_car1.setY(p.y);
-                    Log.i("car1.x:", new Float(p.x).toString());
-                    Log.i("car1.y:", new Float(p.y).toString());
+                        list_point.set(i / 2, new Point(int_distance, int_angle));
+//                        Log.i("str[" + i + "]", " " + int_distance);
+//                        Log.i("str[" + i + 1 + "]", "" + int_angle);
+                    }
 
+                    /*
+                    for (ImageView i : list_car) {//我是谁？我在哪？我在干什么？这迷一样的代码是我写的？？
+                        i.setY(list_point.get(list_car.indexOf(i)).getY());
+                        i.setX(list_point.get(list_car.indexOf(i)).getX());
+                    }
+                    */
+//                    Log.i("list_car",""+list_car.size());
+                    for (int i = 0; i < list_car.size(); i++) {//反正都是更新im_car的坐标,哪种能看懂就看哪种吧(；´д｀)ゞ
+                        list_car.get(i).setX(list_point.get(i).getX());
+                        list_car.get(i).setY(list_point.get(i).getY());
+//                        Log.i("car" + i + ".x", " " + list_point.get(i).getX());
+//                        Log.i("car" + i + ".y", " " + list_point.get(i).getY());
+                    }
             }
         }
     }
-
 }
+
+
