@@ -1,5 +1,6 @@
 package com.lkites.radardemov02;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,10 +11,13 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.util.List;
 
 /*
 ┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
@@ -30,21 +34,16 @@ import android.widget.Toast;
 ├─────┬──┴─┬─┴──┬┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬────┬────┤ ┌───┼───┼───┐ ├───┴───┼───┤ E││
 │ Ctrl│ Fn │Alt │         Space         │ Alt│ Fn │ Pn │Ctrl│ │ ← │ ↓ │ → │ │   0   │ . │←─┘│
 └─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
-
-   Modification date:18-5-1
-   Describe:完成雷达车辆显示的功能，还差WiFi没有实现
-
-   先完成一个车辆的v1版本，之后再完成多个车辆的版本，那时将car_image改成new的形式来实现
-
 */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ConstraintLayout constraintLayout;
-
     private ImageView im_car1;
+    private WifiAdmin mWifiAdmin;
     private String str_receive, str_distance, str_angle;
-
+    private MyHandler myHandler;
+    private List<ImageView> list_car;
 
 
     @Override
@@ -53,11 +52,12 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         InitView();
-//todo 检查WiFi是否开启以及是否连接到esp8266的WiFi
+        checkWifiConnection();
+
 
         //开启服务器
         MobileServer mobileServer = new MobileServer();
-        mobileServer.setHandler(handler);
+        mobileServer.setHandler(myHandler);
         new Thread(mobileServer).start();
 
 
@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity
 
         constraintLayout = findViewById(R.id.constraintlayout);
         im_car1 = findViewById(R.id.im_car1);
+
+        mWifiAdmin = new WifiAdmin(this);
+
+        myHandler = new MyHandler();
 
         //设置侧滑导航的点击事件
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -94,34 +98,40 @@ public class MainActivity extends AppCompatActivity
         final int id = item.getItemId();
 
         if (id == R.id.nav_main) {
-            constraintLayout.setBackgroundResource(R.drawable.radar_background4);
-        } else if (id == R.id.nav_connect) {
-//todo 检查WiFi是否开启以及是否连接到esp8266的WiFi
-//
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(MainActivity.this, "连接成功", Toast.LENGTH_SHORT).show();
-                }
-            }, 1000);
+
+        } else if (id == R.id.nav_connect) {     //显示环形进度条并检查wifi连接
+
+            if ((mWifiAdmin.checkState() == 3) && (mWifiAdmin.getSSID().equals("\"ATK_ESP8266\""))) {
+                //如果已经连接了esp8266，就不再显示进度条和执行连接的操作
+                Toast.makeText(MainActivity.this, "雷达已经连接成功！", Toast.LENGTH_SHORT).show();
+            } else {
+                //环形进度条
+                showProgressDialog(2900);
+                //开启wifi连接并检测连接的wifi是否正确
+                checkWifiConnection();
+            }
 
         } else if (id == R.id.nav_question) {
 //todo 常见问题 使用说明
 
         } else if (id == R.id.nav_update) {
+
             Toast.makeText(MainActivity.this, "当前为最新版本", Toast.LENGTH_SHORT).show();
+
         } else {
+
             if (id == R.id.nav_about) {
 //todo 关于
-            Intent i = new Intent(MainActivity.this,AboutActivity.class);
-            startActivity(i);
-
+                Intent i = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(i);
             }
+
         }
 
         //点击item之后关闭drawer，
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 
@@ -141,7 +151,52 @@ public class MainActivity extends AppCompatActivity
         super.onDestroy();
     }
 
-    private Handler handler = new Handler() {
+    /**
+     * 检查wifi是否开启并是否连接esp8266
+     */
+    private void checkWifiConnection() {
+        //开启wifi功能
+        mWifiAdmin.openWifi();
+
+        //wifi开启后自动连接至esp8266需要时间
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mWifiAdmin.getSSID().equals("\"ATK_ESP8266\"")) { //getSSID()返回的字符串包含了“”
+                    Toast.makeText(MainActivity.this, "雷达自动连接成功！", Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    Toast.makeText(MainActivity.this, "自动连接失败，请手动连接WiFi: ATK_ESP8266", Toast.LENGTH_LONG)
+                            .show();
+                }
+            }
+        }, 2500);
+    }
+
+    /**
+     * 显示环形进度条
+     */
+    private void showProgressDialog(final int time) {
+        final ProgressDialog proDia = new ProgressDialog(MainActivity.this);
+        proDia.setTitle("连接雷达");
+        proDia.setMessage("雷达连接中，请耐心等待……");
+        proDia.onStart();
+        new Thread() {
+            public void run() {
+                try {
+                    Thread.sleep(time);
+                } catch (Exception e) {
+
+                } finally {         //匿名内部类要访问类中的数据，该数据必须为final
+                    proDia.dismiss();       //隐藏对话框
+                }
+            }
+        }.start();
+        proDia.show();
+    }
+
+
+    private class MyHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {  //接收消息
             switch (msg.what) {
@@ -156,15 +211,18 @@ public class MainActivity extends AppCompatActivity
                     //将距离和角度的字符串转换成int类型
                     int int_distance = Integer.valueOf(str_distance);
                     int int_angle = Integer.valueOf(str_angle);
-                    Point p = new Point(int_distance,int_angle);
-//todo 封装成一个函数
+                    Point p = new Point(int_distance, int_angle);
+//todo 用list来放多个car
 //todo 屏幕适配
+                    
+
                     im_car1.setX(p.x);
                     im_car1.setY(p.y);
-                    System.out.println(p.x);
-                    System.out.println(p.y);
+                    Log.i("car1.x:", new Float(p.x).toString());
+                    Log.i("car1.y:", new Float(p.y).toString());
 
             }
-        }//这里会存在内存泄露的风险，所以代码块变黄了
-    };
+        }
+    }
+
 }

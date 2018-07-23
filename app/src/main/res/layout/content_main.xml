@@ -28,7 +28,8 @@
             android:layout_height="50dp"
             android:layout_x="545px"
             android:layout_y="300px"
-            android:src="@drawable/car_red" />
+            android:src="@drawable/car_red"
+            android:visibility="invisible"/>
 
 
     </AbsoluteLayout>

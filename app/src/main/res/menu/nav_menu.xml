@@ -5,7 +5,7 @@
 
     <group
         android:id="@+id/nav1"
-        android:checkableBehavior="single">
+        android:checkableBehavior="none">
         <item
             android:id="@+id/nav_main"
             android:checked="true"
@@ -14,11 +14,8 @@
         <item
             android:id="@+id/nav_connect"
             android:icon="@mipmap/ic_bluetooth_connect"
-            android:title="设备连接" />
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@mipmap/ic_settings"
-            android:title="设置" />
+            android:title="设备连接"
+            />
     </group>
     <group>
         <item
