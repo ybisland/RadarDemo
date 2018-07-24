@@ -1,10 +1,9 @@
-package com.lkites.radardemov02;
+package com.lkites.radar;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Window;
 
 public class SplashActivity extends AppCompatActivity {
 

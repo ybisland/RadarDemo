@@ -1,4 +1,4 @@
-package com.lkites.radardemov02;
+package com.lkites.radar;
 
 import android.os.Handler;
 import android.os.Message;

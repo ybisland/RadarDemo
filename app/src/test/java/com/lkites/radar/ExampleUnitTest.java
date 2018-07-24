@@ -1,4 +1,4 @@
-package com.lkites.radardemov02;
+package com.lkites.radar;
 
 import org.junit.Test;
 

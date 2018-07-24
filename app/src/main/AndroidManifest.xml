@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lkites.radardemov02">
+    package="com.lkites.radar">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <!--允许访问网络状态的权限-->
@@ -19,7 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".SplashActivity">
+        <activity android:name="com.lkites.radar.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,11 +27,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.lkites.radar.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <activity android:name=".AboutActivity"></activity>
+        <activity android:name="com.lkites.radar.AboutActivity"></activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.lkites.radardemov02;
+package com.lkites.radar;
 
 import android.content.Context;
 import android.net.wifi.ScanResult;
