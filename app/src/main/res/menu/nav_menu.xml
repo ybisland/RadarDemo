@@ -14,18 +14,13 @@
         <item
             android:id="@+id/nav_connect"
             android:icon="@mipmap/ic_bluetooth_connect"
-            android:title="设备连接"
-            />
+            android:title="设备连接" />
     </group>
     <group>
         <item
             android:id="@+id/nav_update"
             android:icon="@mipmap/ic_update"
             android:title="检查更新" />
-        <item
-            android:id="@+id/nav_question"
-            android:icon="@mipmap/ic_question"
-            android:title="常见问题" />
         <item
             android:id="@+id/nav_about"
             android:icon="@mipmap/ic_about"

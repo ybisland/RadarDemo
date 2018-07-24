@@ -131,21 +131,15 @@ public class MainActivity extends AppCompatActivity
                 checkWifiConnection();
             }
 
-        } else if (id == R.id.nav_question) {
-//todo 常见问题 使用说明
-
-        } else if (id == R.id.nav_update) {
+        }  else if (id == R.id.nav_update) {
 
             Toast.makeText(MainActivity.this, "当前为最新版本", Toast.LENGTH_SHORT).show();
 
         } else {
-
             if (id == R.id.nav_about) {
-//todo 关于
                 Intent i = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(i);
             }
-
         }
 
         //点击item之后关闭drawer，
@@ -234,7 +228,7 @@ public class MainActivity extends AppCompatActivity
 
                     for (int i = 0; i < str.length - 1; i += 2) {
                         str_distance = str[i];
-                        str_angle = str[i+1];
+                        str_angle = str[i + 1];
                         try {//字符串容易出异常
                             int_distance = Integer.valueOf(str_distance);
                             int_angle = Integer.valueOf(str_angle);
@@ -265,5 +259,3 @@ public class MainActivity extends AppCompatActivity
         }
     }
 }
-
-

@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/text_about1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="这是关于！"
-        android:textSize="40sp"/>
+        android:text="行车透视眼"
+        android:textSize="40sp"
+        android:gravity="center_horizontal"/>
+    <TextView
+        app:layout_constraintTop_toBottomOf="@+id/text_about1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="        行车透视眼是提供一种基于微波雷达的高速公路团雾雾区路况可视化装置，利用LFMCW线性调频雷达传感器采集包含前方雾区道路车辆的速度距离方位等信息的雷达信号，然后经DSP信号运算处理电路处理，提取出前方车辆的速度、距离、方位等参数，在中控台的雾区路况显示屏上显示出来，帮助司机判断雾区内的车辆行驶位置情况，从而采取合理驾驶操作措施，安全通过雾区。同时当车距小于安全车距时，声音报警电路进行长音间隔报警声和急促报警声警示与前方车距处于警示区域和危险区域，从而防范追尾事故。此装置能让驾驶员掌握雾区路况，如同行驶在非雾区一样明朗，避免因团雾或其他大雾气象而导致的事故发生，从而避免车上人员生命和经济财产损失。"/>
 </android.support.constraint.ConstraintLayout>
