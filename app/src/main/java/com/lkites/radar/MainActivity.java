@@ -18,25 +18,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-/*
-┌───┐   ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┬───┐ ┌───┬───┬───┐
-│Esc│   │F1 │F2 │F3 │F4 │ │F5 │F6 │F7 │F8 │ │F9 │F10│F11│F12│ │P/S│S L│P/B│  ┌┐    ┌┐    ┌┐
-└───┘   └───┴───┴───┴───┘ └───┴───┴───┴───┘ └───┴───┴───┴───┘ └───┴───┴───┘  └┘    └┘    └┘
-┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┐ ┌───┬───┬───┐ ┌───┬───┬───┬───┐
-│~ `│! 1│@ 2│# 3│$ 4│% 5│^ 6│& 7│* 8│( 9│) 0│_ -│+ =│ BacSp │ │Ins│Hom│PUp│ │N L│ / │ * │ - │
-├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─────┤ ├───┼───┼───┤ ├───┼───┼───┼───┤
-│ Tab │ Q │ W │ E │ R │ T │ Y │ U │ I │ O │ P │{ [│} ]│ | \ │ │Del│End│PDn│ │ 7 │ 8 │ 9 │   │
-├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴─────┤ └───┴───┴───┘ ├───┼───┼───┤ + │
-│ Caps │ A │ S │ D │ F │ G │ H │ J │ K │ L │: ;│" '│ Enter  │               │ 4 │ 5 │ 6 │   │
-├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────────┤     ┌───┐     ├───┼───┼───┼───┤
-│ Shift  │ Z │ X │ C │ V │ B │ N │ M │< ,│> .│? /│  Shift   │     │ ↑ │     │ 1 │ 2 │ 3 │   │
-├─────┬──┴─┬─┴──┬┴───┴───┴───┴───┴───┴──┬┴───┼───┴┬────┬────┤ ┌───┼───┼───┐ ├───┴───┼───┤ E││
-│ Ctrl│ Fn │Alt │         Space         │ Alt│ Fn │ Pn │Ctrl│ │ ← │ ↓ │ → │ │   0   │ . │←─┘│
-└─────┴────┴────┴───────────────────────┴────┴────┴────┴────┘ └───┴───┴───┘ └───────┴───┴───┘
 
-写代码的时候总是很佩服自己，我真TM是个人才，竟然能写出这样迷一般的代码
-
-*/
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -62,8 +44,8 @@ public class MainActivity extends AppCompatActivity
         mobileServer.setHandler(myHandler);
         new Thread(mobileServer).start();
 
-
-    }//onCreate结束
+    }
+    //onCreate结束
 
 
     private void InitView() {
@@ -117,7 +99,8 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_main) {
 
-        } else if (id == R.id.nav_connect) {     //显示环形进度条并检查wifi连接
+        } else if (id == R.id.nav_connect) {
+            //显示环形进度条并检查wifi连接
 
             if ((mWifiAdmin.checkState() == 3) && (mWifiAdmin.getSSID().equals("\"ATK_ESP8266\""))) {
                 //如果已经连接了esp8266，就不再显示进度条和执行连接的操作
@@ -174,7 +157,8 @@ public class MainActivity extends AppCompatActivity
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mWifiAdmin.getSSID().equals("\"ATK_ESP8266\"")) { //getSSID()返回的字符串包含了“”
+                if (mWifiAdmin.getSSID().equals("\"ATK_ESP8266\"")) {
+                    //getSSID()返回的字符串包含了“”
                     Toast.makeText(MainActivity.this, "雷达自动连接成功！", Toast.LENGTH_SHORT)
                             .show();
                 } else {
@@ -199,8 +183,10 @@ public class MainActivity extends AppCompatActivity
                     Thread.sleep(time);
                 } catch (Exception e) {
 
-                } finally {         //匿名内部类要访问类中的数据，该数据必须为final
-                    proDia.dismiss();       //隐藏对话框
+                } finally {
+                    //匿名内部类要访问类中的数据，该数据必须为final
+                    proDia.dismiss();
+                    //隐藏对话框
                 }
             }
         }.start();
@@ -210,7 +196,8 @@ public class MainActivity extends AppCompatActivity
 
     private class MyHandler extends Handler {
         @Override
-        public void handleMessage(Message msg) {  //接收消息
+        public void handleMessage(Message msg) {
+            //接收消息
             switch (msg.what) {
                 case 1:
                     String str_receive;
@@ -227,7 +214,8 @@ public class MainActivity extends AppCompatActivity
                     for (int i = 0; i < str.length - 1; i += 2) {
                         str_distance = str[i];
                         str_angle = str[i + 1];
-                        try {//字符串容易出异常
+                        try {
+                            //字符串容易出异常
                             int_distance = Integer.valueOf(str_distance);
                             int_angle = Integer.valueOf(str_angle);
                         } catch (Exception e) {
@@ -241,13 +229,13 @@ public class MainActivity extends AppCompatActivity
                     }
 
                     /*
-                    for (ImageView i : list_car) {//我是谁？我在哪？我在干什么？这迷一样的代码是我写的？？
+                    for (ImageView i : list_car) {
                         i.setY(list_point.get(list_car.indexOf(i)).getY());
                         i.setX(list_point.get(list_car.indexOf(i)).getX());
                     }
                     */
 //                    Log.i("list_car",""+list_car.size());
-                    for (int i = 0; i < list_car.size(); i++) {//反正都是更新im_car的坐标,哪种能看懂就看哪种吧(；´д｀)ゞ
+                    for (int i = 0; i < list_car.size(); i++) {
                         list_car.get(i).setX(list_point.get(i).getX());
                         list_car.get(i).setY(list_point.get(i).getY());
 //                        Log.i("car" + i + ".x", " " + list_point.get(i).getX());

@@ -9,6 +9,16 @@
         <option value="$PROJECT_DIR$/build" />
         <option value="$PROJECT_DIR$/app/src/androidTest" />
         <option value="$PROJECT_DIR$/app/src/test" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values-v21" />
+        <option value="$PROJECT_DIR$/.gradle" />
+        <option value="$PROJECT_DIR$/.idea" />
+        <option value="$PROJECT_DIR$/build" />
+        <option value="$PROJECT_DIR$/gradle" />
+        <option value="$PROJECT_DIR$/app/src/androidTest" />
+        <option value="$PROJECT_DIR$/app/src/test" />
+        <option value="$PROJECT_DIR$/app/libs" />
+        <option value="$PROJECT_DIR$/app/build" />
       </list>
     </option>
   </component>

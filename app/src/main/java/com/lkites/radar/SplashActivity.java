@@ -24,7 +24,8 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 Intent i = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(i);
-                finish();//防止在主界面按返回按键回到该活动
+                finish();
+                //防止在主界面按返回按键回到该活动
             }
         }, 2000);
 

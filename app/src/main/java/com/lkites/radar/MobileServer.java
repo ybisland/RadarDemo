@@ -9,7 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Created by 22122 on 18-7-17.
+ *
  * 在手机端建立一个作为接受ESP8266发送的消息的服务器：
  */
 
@@ -29,14 +29,15 @@ public class MobileServer implements Runnable {
 
     @Override
     public void run() {
-//todo 透传
+
         try {
             //5000是手机端开启的服务器的端口号，ESP8266进行TCP连接时使用的端口，而IP也是通过指令查询的联入设备的IP
             server = new ServerSocket(5000);
             while (true) {
                 Socket client = server.accept();
                 in = new DataInputStream(client.getInputStream());
-                receice = new byte[50];  //接收的数据最大50字节
+                receice = new byte[50];
+                //接收的数据最大50字节
                 in.read(receice);
                 in.close();
 
